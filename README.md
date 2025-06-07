@@ -94,7 +94,7 @@ Glavne funkcionalnosti aplikacije uključuju:
 - Učitavanje i snimanje slike
   
 Osnovni tip za predstavljanje slike u OpenCvSharp biblioteci je klasa Mat, čiji objekat sadrži informacije o slici, kao što su dimenzije, broj kanala i vrednosti pojedinačnih piksela.
-Treba napomenuti da OpenCvSharp koristi unmanaged resurse za rad sa slikama i drugim objektima, što znači da memorija nije automatski upravljana kao u standardnom .NET okruženju. Zbog toga je neophodno ručno osloboditi zauzetu memoriju kada se objekti više ne koriste pozivanjem metode Dispose nad objektima kao što su Mat, Window i slično ili koristiti using blok koji omogućava automatsko oslobađanje memorije. 
+Treba napomenuti da OpenCvSharp koristi unmanaged resurse za rad sa slikama i drugim objektima, što znači da memorija nije automatski upravljana kao u standardnom .NET okruženju. Zbog toga je neophodno ručno osloboditi zauzetu memoriju kada se objekti više ne koriste pozivanjem metode Dispose nad objektima kao što su Mat, Window i slično ili koristiti using blok koji omogućava automatsko oslobađanje memorije. Za rad sa slikama i video zapisima koristi se statička klasa Cv2, u kojoj su definisane sve potrebne metode.
 
 Primer učitavanja slike pomoću metode `Cv2.ImRead()` u prethodno inicijalizovan Mat objekat. Da bismo sliku prikazali u PictureBox-u neophodno je izvršiti njenu konverziju iz Mat u Bitmap objekat.
 ```csharp 
