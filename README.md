@@ -9,6 +9,8 @@ U ovom projektu razvijena je Windows Forms aplikacija koja koristi OpenCvSharp b
   - [Prednosti korišćenja](#prednosti-korišćenja)
   - [Konkurentna rešenja](#konkurentna-rešenja)
 - [Instalacija biblioteke](#instalacija-biblioteke)
+  - [Preduslovi](#preduslovi)
+  - [Instalacija](#instalacija)
 - [Implementacija](#implementacija)
 - [Zaključak](#zaključak)
 
@@ -51,7 +53,7 @@ Iako su obe biblioteke namenjene rešavanju sličnih problema, i imaju slične p
 
 Glavna razlika odnosi se na dodavanje biblioteke i jednostavnost korišćenja. OpenCvSharp je jednostavnija za dodavanje, jer se može instalirati direktno putem NuGet paketa, dok Emgu CV često zahteva ručno dodavanje native DLL-ova i dodatnih zavisnosti, čime se povećava kompleksnost i veličina projekta.
 
-Još jedna od razlika je što Emgu CV koristi model dvostruke licence: open-source i komercijalne licence. Ukoliko koristimo Emgu CV pod open-source uslovima, naš kod takođe mora da bude otvoren za zajednicu i njeno korišćenje i deljenje. U slulaju razvoja aplikacija zatvorenog koda, neophodna je kupovina komercijalne licence, što može predstavljati dodatni trošak.
+Još jedna od razlika je što Emgu CV koristi model dvostruke licence: open-source i komercijalna licenca. Ukoliko koristimo Emgu CV pod open-source uslovima, naš kod takođe mora da bude otvoren za zajednicu i njeno korišćenje i deljenje. U slučaju razvoja aplikacija zatvorenog koda, neophodna je kupovina komercijalne licence, što može predstavljati dodatni trošak.
 
 Takođe, važno je napomenuti da je OpenCvSharp modernija i češće ažurirana biblioteka u poređenju sa Emgu CV, što je čini pogodnijom za projekte kojima je važnija savremena podrška i kompatibilnost sa novim verzijama OpenCV-ja.
 
@@ -78,7 +80,7 @@ Pored osnovnog paketa OpenCvSharp4, u zavisnosti od platforme na kojoj razvijate
 - Za Windows platformu neophodno je uključiti paket OpenCvSharp4.runtime.win
 - Za Linux platformu koristi se paket OpenCvSharp4.runtime.ubuntu.18.04-x64 (ili druga odgovarajuća verzija)
 
-Još jedan od korisnih paketa je OpenCvSharp4.Extensions, koji pruža dodatne funkcije i alate koji olakšavaju rad sa OpenCvSharp-om, kao što su konverzije između OpenCV objekata i standardnih .NET tipova, dodatne metode za manipulaciju slikama i integraciju sa drugim bibliotekama unutar .NET okruženja. 
+Još jedan od korisnih paketa je OpenCvSharp4.Extensions, koji pruža dodatne funkcije i alate koji olakšavaju rad sa OpenCvSharpom, kao što su konverzije između OpenCV objekata i standardnih .NET tipova, dodatne metode za manipulaciju slikama i integraciju sa drugim bibliotekama unutar .NET okruženja. 
 
 ![NuGet Package Manager UI](images/nuget-package-manager-ui.png)
 
@@ -86,22 +88,22 @@ U Visual Studio okruženju, u okviru panela References unutar projekta biće pri
 
 # Implementacija
 
-U okviru ovog projekta razvijena je aplikacija Image Analyzer koja koristi OpenCvSharp biblioteku za obradu i analizu slika unutar .NET okruženja. Aplikacija omogućava korisniku da učita sliku sa računara, izvrši njenu obradu i nakon toga da sačuva izmenjenu sliku u memoriji računara. 
+U okviru ovog projekta razvijena je aplikacija Image Analyzer koja koristi OpenCvSharp biblioteku za obradu i analizu slika u .NET okruženju. Aplikacija omogućava korisniku da učita sliku sa računara, izvrši njenu obradu i nakon toga da sačuva izmenjenu sliku na računar. 
 
 Glavne funkcionalnosti aplikacije uključuju: 
 - Učitavanje i snimanje slike
   
-Osnovni tip za predstavljanje slike u OpenCvSharp biblioteci je klasa Mat. Objekat ove klase sadrži informacije o slici, kao što su dimenzije, broj kanala i vrednosti pojedinačnih piksela.
+Osnovni tip za predstavljanje slike u OpenCvSharp biblioteci je klasa Mat, čiji objekat sadrži informacije o slici, kao što su dimenzije, broj kanala i vrednosti pojedinačnih piksela.
 Treba napomenuti da OpenCvSharp koristi unmanaged resurse za rad sa slikama i drugim objektima, što znači da memorija nije automatski upravljana kao u standardnom .NET okruženju. Zbog toga je neophodno ručno osloboditi zauzetu memoriju kada se objekti više ne koriste pozivanjem metode Dispose nad objektima kao što su Mat, Window i slično ili koristiti using blok koji omogućava automatsko oslobađanje memorije. 
 
-Primer učitavanja slike pomoću metode `Cv2.ImRead()` u prethodno inicijalizovan Mat objekat. Da bismo sliku prikazali unutar PictureBox-a neophodno je izvršiti njenu konverziju iz Mat u Bitmap objekat.
-```
+Primer učitavanja slike pomoću metode `Cv2.ImRead()` u prethodno inicijalizovan Mat objekat. Da bismo sliku prikazali u PictureBox-u neophodno je izvršiti njenu konverziju iz Mat u Bitmap objekat.
+```csharp 
 private void openImageToolStripMenuItem1_Click(object sender, EventArgs e)
  {
-            string CombinedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\Resources");
-            openFileDialog.InitialDirectory = Path.GetFullPath(CombinedPath);
+            string combinedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\Resources");
+            openFileDialog.InitialDirectory = Path.GetFullPath(combinedPath);
 
-            openFileDialog.Filter = "Photos (*.jpg;*.jpeg;*.png;*.bmp;*.gif;*.jfif,*.webp)|*.jpg;*.jpeg;*.png;*.bmp;*.gif;*.jfif;*.webp";
+            openFileDialog.Filter = "Photos (*.jpg;*.jpeg;*.png;*.bmp;*.gif;*.jfif;*.webp)|*.jpg;*.jpeg;*.png;*.bmp;*.gif;*.jfif;*.webp";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
 				
@@ -120,7 +122,7 @@ private void openImageToolStripMenuItem1_Click(object sender, EventArgs e)
 ```
 Za snimanje slike koristi se metoda `Cv2.ImWrite`. Njoj se prosleđuje putanja na kojoj se čuva slika, kao i Mat objekat koji želimo da sačuvamo.
 
-```
+```csharp 
  private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (pictureBoxEdited.Image != null)
@@ -161,7 +163,7 @@ Glavni model boja koji OpenCvSharp koristi za predstavljanje slika je BGR (Blue,
 
 Metoda `Cv2.CvtColor` vrši konverziju boja iz jednog kolor prostora u drugi. Prva dva parametra predstavljaju ulaznu i izlaznu sliku, dok se kao treći parametar prosleđuje kod koji definiše pravac konverzije. U ovom slučaju, slika se konvertuje iz BGR u Grayscale korišćenjem koda `ColorConversionCodes.BGR2GRAY`.
 
-```
+```csharp 
  private Mat getGrayscale()
         {
             Mat gray = new Mat();
@@ -171,7 +173,7 @@ Metoda `Cv2.CvtColor` vrši konverziju boja iz jednog kolor prostora u drugi. Pr
 
 ```
 Za konverziju iz BGR u HSV kao treći parametar potrebno je proslediti `ColorConversionCodes.BGR2HSV`.
-```
+```csharp 
 Cv2.CvtColor(originalImage, editedImage, ColorConversionCodes.BGR2HSV);
 ```
 
@@ -179,7 +181,7 @@ Cv2.CvtColor(originalImage, editedImage, ColorConversionCodes.BGR2HSV);
 
 Za uklanjanje šuma sa slike koriste se različite vrste zamućenja. Neke od najčešće korišćenih tehnika su Gaussian Blur, Median Blur i Box Blur. Odgovarajuće metode za primenu ovih zamućenja su `CV2.GaussianBlur`, `CV2.MedianBlur` i `CV2.Blur`. Sve ove metode koriste parametar KernelSize, koji određuje dimenzije filtera (matrice) i direktno utiče na intenzitet zamućenja. Za Gaussian Blur pored veličine kernela koristi se i parametar sigma koji određuje standardnu devijaciju Gaussove funkcije
 
-```
+```csharp 
   switch (parameters.Type)
                 {
                     case BlurType.Gaussian:
@@ -198,7 +200,15 @@ Za uklanjanje šuma sa slike koriste se različite vrste zamućenja. Neke od naj
 
 Za kreiranje binarne slike, odnosno slike koja se sastoji isključivo od crnih i belih piksela, koristi se tehnika thresholding. Ovim postupkom vrši se segmentacija slike na osnovu vrednosti praga, što omogućava odvajanje objekta od pozadine. U okviru projekta implementirane su različite threshold metode: Otsu Threshold, Adaptive Mean Threshold i Adaptive Gaussian Threshold. Kod adaptivnih metoda, korisnik može ručno podešavati parametre veličine kernela i konstantu C, čime se utiče na preciznost i kvalitet segmentacije.
 
+Za primenu Otsu thresholda neophodno je metodi Cv2.Threshold proslediti parametar ThresholdTypes.Otsu. Ova tehnika automatski određuje optimalnu vrednost praga za segmentaciju slike, čime se postiže preciznija binarizacija bez potrebe za ručnim podešavanjem praga.
+
+```csharp 
+Cv2.Threshold(getGrayscale(), editedImage, 0, 255, ThresholdTypes.Binary | ThresholdTypes.Otsu);
 ```
+
+Za primenu adaptivnih metoda binarizacije koristi se Cv2.AdaptiveThreshold. Kao parametar se prosleđuje tip adaptivnog praga, koji može biti AdaptiveThresholdTypes.MeanC ili AdaptiveThresholdTypes.GaussianC, u zavisnosti od željene metode izračunavanja vrednosti praga.
+
+```csharp 
 if (parameters.Type == AdaptiveType.Mean)
                 Cv2.AdaptiveThreshold(grayImage, editedImage, 255, AdaptiveThresholdTypes.MeanC, ThresholdTypes.Binary, parameters.BlockSize, parameters.ConstantC);
             else
@@ -209,7 +219,7 @@ if (parameters.Type == AdaptiveType.Mean)
 
 Za određivanje granica kontura objekata na slici koriste se različite metode detekcija ivica. U okviru ovog projekta implementirane su tri poznate tehnike: Canny, Sobel i Laplacian detekcija ivica. 
 Metode `CV2.Canny` i `CV2.Laplacian` primenjuju određene tehnike za detekciju ivica. Korisniku je omogućeno fino podešavanje parametara za što bolju detekciju. 
-```
+```csharp 
  if (parameters.Type == EdgeDetectionType.Canny)
                 Cv2.Canny(getGrayscale(), editedImage, (double)parameters.Threshold1, (double)parameters.Threshold2, parameters.KernelSize);
             else
@@ -218,13 +228,13 @@ Metode `CV2.Canny` i `CV2.Laplacian` primenjuju određene tehnike za detekciju i
 
 Za Sobel tehniku moguće je odabrati da li želimo detekciju horizontalnih, vertikalnih ili i jednih i drugih ivica. Metoda `Cv2.Sobel` omogućava pronalaženje ivica na osnovu promene intenziteta piksela u horizontalnom i vertikalnom pravcu. Prvi poziv sa parametrima (0,1) označava izvod po Y-osi, što detektuje vertikalne ivice, dok drugi poziv sa parametrima (1,0) označava izvod po X-osi, što detektuje horizontalne ivice.
 
-```
+```csharp 
 Cv2.Sobel(getGrayscale(), sobelY, MatType.CV_8U, 0, 1);
 Cv2.Sobel(getGrayscale(), sobelX, MatType.CV_8U, 1, 0);
 ```
 Dobijene rezultate moguće je kombinovati pomoću metode `Cv2.AddWeighted`, koja omogućava linearnu kombinaciju dve slike. Na ovaj način, kombinuju se horizontalne i vertikalne ivice u jednu sliku.
 
-```
+```csharp 
 Mat sobelX = sobelVertical();
 Mat sobelY = sobelHorizontal();
 Cv2.AddWeighted(sobelX, 0.5, sobelY, 0.5, 0, editedImage);
@@ -235,39 +245,40 @@ Cv2.AddWeighted(sobelX, 0.5, sobelY, 0.5, 0, editedImage);
 
 Nakon kreiranja binarne slike, moguće je izvršiti detekciju kontura. Prvo se kreira prazna slika istih dimenzija kao originalna, korišćenjem `Mat.Zeros`, na kojoj će konture biti iscrtane. Detekcija kontura vrši se pomoću metode `Cv2.FindContours`, kojoj se prosleđuje binarna slika, izlazni parametar `contours` koji će sadržati niz kontura pronađenih na slici, niz `hierarchy` koji sadrži informacije o hijerarhiji kontura, `RetrievalModes.Tree` koji omogućava očuvanje hijerarhije svih pronađenih kontura i `ContourApproximationModes.ApproxSimple` koji eliminiše suvišne tačke.
 
-Nakon detekcije konture se iscrtavaju pomoću metode `Cv2.DrawContours`, kojoj se prosleđuju prethodno pronađene konture, boja kojom će one biti iscrtane, debljina linije, način povezivanja tačaka konture i hijerarhija.
-```
+Nakon detekcije konture se iscrtavaju pomoću metode `Cv2.DrawContours`, kojoj se prosleđuju prethodno pronađene konture, boja kojom će one biti iscrtane, debljina linije, način povezivanja tačaka konture i hijerarhija. Pomoću metode `Cv2.ImShow` prikazuje se slika sa detektovanim konturama u posebnom prozoru.
+```csharp 
 private void findContoursToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (isImageAvailable())
             {
                 Mat contourImage = Mat.Zeros(originalImage.Size(), MatType.CV_8UC3);
                 Cv2.FindContours(editedImage, out OpenCvSharp.Point[][] contours, out HierarchyIndex[] hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxSimple);
-
-
                 Scalar color = new Scalar(255, 0, 0);
                 for (int i = 0; i < contours.Length; i++)
                 {
-
                     Cv2.DrawContours(contourImage, contours, i, color, 2, LineTypes.Link8, hierarchy, 0);
                 }
-
-
-                Cv2.ImShow("Contours", contourImage);
+                pictureBoxEdited.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(contourImage);
             }
         }
 ```
 
 - Detekcija lica
 
-Za detekciju lica korišćen je Haar Cascade klasifikator i prethodno trenirani model za frontalnu detekciju lica. Model se nalazi u xml fajlu `haarcascade_frontalface_default.xml` na zvaničnom OpenCV github repozitorijumu. Neophodno je preuzetiovaj model i dodati ga u projekat unutar foldera Models. OpenCvSharp omogućava korišćenje ovog modela putem klase `CascadeClassifier`. Parametar modelPath predstavlja putanju do prethodno preuzetog modela, a metoda `DetectMultiScale()` služi za detektovanje više objekata na slici. Metodi se prosleđuje Grayscale slika, faktor skaliranja i minimalni broj susednih pravougaonika koji moraju da prepoznaju isto lice da bi ono bilo potvrđeno kao validno. Pronađena lica smeštaju se u faces niz, nakon čega možemo pomoću metode `Cv2.Rectangle` da iscrtamo crvene pravougaonike oko detektovanih lica.
-```
- private void faceDetectionToolStripMenuItem_Click(object sender, EventArgs e)
+Za detekciju lica korišćen je Haar Cascade klasifikator i prethodno trenirani model za frontalnu detekciju lica. Model se nalazi u xml fajlu `haarcascade_frontalface_default.xml` na zvaničnom OpenCV github repozitorijumu. Neophodno je preuzetiovaj model i dodati ga u projekat unutar foldera Models. OpenCvSharp omogućava korišćenje ovog modela putem klase `CascadeClassifier`. Parametar modelPath predstavlja putanju do prethodno preuzetog modela, a metoda `DetectMultiScale()` služi za detektovanje više objekata na slici. Metodi se prosleđuje grayscale slika, faktor skaliranja i minimalni broj susednih pravougaonika koji moraju da prepoznaju isto lice da bi ono bilo potvrđeno kao validno. Pronađena lica smeštaju se u faces niz, nakon čega pomoću metode `Cv2.Rectangle` iscrtavamo crvene pravougaonike oko detektovanih lica.
+```csharp 
+private void faceDetectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (isImageAvailable())
             {
                 editedImage = originalImage.Clone();
                 string modelPath = Path.Combine(Application.StartupPath, "Models", "haarcascade_frontalface_default.xml");
+                if (!File.Exists(modelPath))
+                {
+                    MessageBox.Show("Model za detekciju lica nije pronađen!");
+                    return;
+                }
+
                 var faceCascade = new CascadeClassifier(modelPath);
 
                 Rect[] faces = faceCascade.DetectMultiScale(getGrayscale(), 1.1, 5);
