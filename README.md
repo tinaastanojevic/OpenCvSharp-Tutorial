@@ -9,7 +9,7 @@ U ovom projektu razvijena je Windows Forms aplikacija koja koristi OpenCvSharp b
   - [Prednosti korišćenja](#prednosti-korišćenja)
   - [Konkurentna rešenja](#konkurentna-rešenja)
 - [Instalacija biblioteke](#instalacija-biblioteke)
-- [Aplikacija](#aplikacija)
+- [Implementacija](#implementacija)
 - [Zaključak](#zaključak)
 
 # OpenCvSharp biblioteka
@@ -233,10 +233,34 @@ Cv2.AddWeighted(sobelX, 0.5, sobelY, 0.5, 0, editedImage);
 
 - Detekcija kontura
 
+Nakon kreiranja binarne slike, moguće je izvršiti detekciju kontura. Prvo se kreira prazna slika istih dimenzija kao originalna, korišćenjem `Mat.Zeros`, na kojoj će konture biti iscrtane. Detekcija kontura vrši se pomoću metode `Cv2.FindContours`, kojoj se prosleđuje binarna slika, izlazni parametar `contours` koji će sadržati niz kontura pronađenih na slici, niz `hierarchy` koji sadrži informacije o hijerarhiji kontura, `RetrievalModes.Tree` koji omogućava očuvanje hijerarhije svih pronađenih kontura i `ContourApproximationModes.ApproxSimple` koji eliminiše suvišne tačke.
+
+Nakon detekcije konture se iscrtavaju pomoću metode `Cv2.DrawContours`, kojoj se prosleđuju prethodno pronađene konture, boja kojom će one biti iscrtane, debljina linije, način povezivanja tačaka konture i hijerarhija.
+```
+private void findContoursToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isImageAvailable())
+            {
+                Mat contourImage = Mat.Zeros(originalImage.Size(), MatType.CV_8UC3);
+                Cv2.FindContours(editedImage, out OpenCvSharp.Point[][] contours, out HierarchyIndex[] hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxSimple);
+
+
+                Scalar color = new Scalar(255, 0, 0);
+                for (int i = 0; i < contours.Length; i++)
+                {
+
+                    Cv2.DrawContours(contourImage, contours, i, color, 2, LineTypes.Link8, hierarchy, 0);
+                }
+
+
+                Cv2.ImShow("Contours", contourImage);
+            }
+        }
+```
 
 - Detekcija lica
 
-Za detekciju lica korišćen je Haar Cascade klasifikator i prethodno trenirani model za frontalnu detekciju lica. Model se nalazi u xml fajlu `haarcascade_frontalface_default.xml` na zvaničnom OpenCV github repozitorijumu. Neophodno je preuzeti model odatle i dodati ga u projekat unutar foldera Models. OpenCvSharp omogućava korišćenje ovog modela putem klase `CascadeClassifier`. Parametar modelPath predstavlja putanju do prethodno preuzetog modela, a metoda `DetectMultiSlace()` služi za detektovanje više objekata na slici. Metodi se prosleđuje Grayscale slika, faktor skaliranja i minimalni broj susednih pravougaonika koji moraju da prepoznaju isto lice da bi ono bilo potvrđeno kao validno. Pronađena lica smeštaju se u faces niz, nakon čega možemo pomoću metode `Cv2.Rectangle` da iscrtamo crvene pravougaonike oko pronađenih lica.
+Za detekciju lica korišćen je Haar Cascade klasifikator i prethodno trenirani model za frontalnu detekciju lica. Model se nalazi u xml fajlu `haarcascade_frontalface_default.xml` na zvaničnom OpenCV github repozitorijumu. Neophodno je preuzetiovaj model i dodati ga u projekat unutar foldera Models. OpenCvSharp omogućava korišćenje ovog modela putem klase `CascadeClassifier`. Parametar modelPath predstavlja putanju do prethodno preuzetog modela, a metoda `DetectMultiScale()` služi za detektovanje više objekata na slici. Metodi se prosleđuje Grayscale slika, faktor skaliranja i minimalni broj susednih pravougaonika koji moraju da prepoznaju isto lice da bi ono bilo potvrđeno kao validno. Pronađena lica smeštaju se u faces niz, nakon čega možemo pomoću metode `Cv2.Rectangle` da iscrtamo crvene pravougaonike oko detektovanih lica.
 ```
  private void faceDetectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
