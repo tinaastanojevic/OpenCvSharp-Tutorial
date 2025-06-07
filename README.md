@@ -8,7 +8,7 @@ U ovom projektu razvijena je Windows Forms aplikacija koja koristi OpenCvSharp b
   - [Problem koji rešava](#problem-koji-rešava)
   - [Prednosti korišćenja](#prednosti-korišćenja)
   - [Konkurentna rešenja](#konkurentna-rešenja)
-- [Instalacija i pokretanje](#instalacija-i-pokretanje)
+- [Instalacija biblioteke](#instalacija-biblioteke)
 - [Aplikacija](#aplikacija)
 - [Zaključak](#zaključak)
 
@@ -55,9 +55,73 @@ Još jedna od razlika je što Emgu CV koristi model dvostruke licence: open-sour
 
 Takođe, važno je napomenuti da je OpenCvSharp modernija i češće ažurirana biblioteka u poređenju sa Emgu CV, što je čini pogodnijom za projekte kojima je važnija savremena podrška i kompatibilnost sa novim verzijama OpenCV-ja.
 
-# Instalacija i pokretanje
+# Instalacija biblioteke
+
+## Preduslovi
+
+Za instalaciju OpenCvSharp biblioteke preporučuje se korišćenje Visual Studio okruženja, koje ima ugrađene alate za upravljanje NuGet paketima, olakšavajući instalaciju i upravljanje zavisnostima u .NET projektima.
+
+## Instalacija
+
+Najjednostavniji način za instalaciju OpenCvSharp biblioteke u .NET projekat je korišćenjem NuGet paketa. Instalacija se može izvršiti na dva načina:
+1. Kroz NuGet Package Manager Console
+   
+U Visual Studio-u otvorite Package Manager Console i unesite sledeću komandu:
+```
+Install-Package OpenCvSharp4
+```
+2. Kroz NuGet Package Manager UI
+
+U Visual Studio-u kliknite desnim tasterom miša na projekat u Solution Explorer-u, izaberite Manage NuGet Packages. U okviru kartice Browse potražite paket OpenCvSharp4, izaberite ga i kliknite na Install. 
+
+Pored osnovnog paketa OpenCvSharp4, u zavisnosti od platforme na kojoj razvijate aplikaciju, potrebno je instalirati i odgovarajuće dodatne pakete koji obezbeđuju potrebne native biblioteke i dodatne funkcionalnosti. 
+- Za Windows platformu neophodno je uključiti paket OpenCvSharp4.runtime.win
+- Za Linux platformu koristi se paket OpenCvSharp4.runtime.ubuntu.18.04-x64 (ili druga odgovarajuća verzija)
+
+Još jedan od korisnih paketa je OpenCvSharp4.Extensions, koji pruža dodatne funkcije i alate koji olakšavaju rad sa OpenCvSharp-om, kao što su konverzije između OpenCV objekata i standardnih .NET tipova, dodatne metode za manipulaciju slikama i integraciju sa drugim bibliotekama unutar .NET okruženja. 
+
+![NuGet Package Manager UI](images/nuget-package-manager-ui.png)
+
+U Visual Studio okruženju, u okviru panela References unutar projekta biće prikazani svi dodati NuGet paketi. Ovaj pregled nam omogućava da lako proverimo da li su svi neophodni paketi uspešno uključeni u projekat, što je ključno za pravilno funkcionisanje aplikacije i izbegavanje problema sa zavisnostima.
 
 # Aplikacija
+
+## Opis
+
+U okviru ovog projekta razvijena je aplikacija Image Analyzer koja koristi OpenCvSharp biblioteku za obradu i analizu slika unutar .NET okruženja. Aplikacija omogućava korisniku da učita sliku sa računara, izvrši njenu obradu i nakon toga da sačuva izmenjenu sliku u memoriji računara. 
+
+## Funkcionalnosti 
+
+Glavne funkcionalnosti aplikacije uključuju: 
+- Učitavanje i snimanje slike
+Osnovni tip za predstavljanje slike u OpenCvSharp biblioteci je klasa Mat. Objekat ove klase sadrži informacije o slici, kao što su dimenzije, broj kanala i vrednosti pojedinačnih piksela.
+Treba napomenuti da OpenCvSharp koristi unmanaged resurse za rad sa slikama i drugim objektima, što znači da memorija nije automatski upravljana kao u standardnom .NET okruženju. Zbog toga je neophodno ručno osloboditi zauzetu memoriju kada se objekti više ne koriste pozivanjem metode Dispose nad objektima kao što su Mat, Window i slično ili koristiti using blok koji omogućava automatsko oslobađanje memorije. 
+
+Primer učitavanja slike pomoću funkcije ImRead u prethodno inicijalizovan Mat objekat. Da bismo sliku prikazali unutar PictureBox-a neophodno je izvršiti njenu konverziju iz Mat u Bitmap objekat.
+```
+private void openImageToolStripMenuItem1_Click(object sender, EventArgs e)
+ {
+            string CombinedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\Resources");
+            openFileDialog.InitialDirectory = Path.GetFullPath(CombinedPath);
+
+            openFileDialog.Filter = "Photos (*.jpg;*.jpeg;*.png;*.bmp;*.gif;*.jfif,*.webp)|*.jpg;*.jpeg;*.png;*.bmp;*.gif;*.jfif;*.webp";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+				
+                originalImage = Cv2.ImRead(openFileDialog.FileName);
+		
+                bitmapImage = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(originalImage);
+				
+                pictureBoxOriginal.Image = bitmapImage;
+                pictureBoxEdited.Image = bitmapImage;
+            }
+            else
+            {
+                MessageBox.Show("Unable to open an image!");
+            }
+}
+```
+
 
 # Zaključak
 
