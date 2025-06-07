@@ -1,9 +1,16 @@
 # Kreiranje aplikacije pomoću OpenCvSharp biblioteke
 U ovom projektu razvijena je Windows Forms aplikacija koja koristi OpenCvSharp biblioteku. Cilj aplikacije je demonstracija i praktična primena odabranih funkcionalnosti ove biblioteke za obradu i analizu slika.
+
 # Sadržaj
 
 - [OpenCvSharp biblioteka](#opencvsharp-biblioteka)
+  - [Mogućnosti biblioteke](#mogućnosti-biblioteke)
+  - [Problem koji rešava](#problem-koji-rešava)
+  - [Prednosti korišćenja](#prednosti-korišćenja)
+  - [Konkurentna rešenja](#konkurentna-rešenja)
 - [Instalacija i pokretanje](#instalacija-i-pokretanje)
+- [Aplikacija](#aplikacija)
+- [Zaključak](#zaključak)
 
 # OpenCvSharp biblioteka
 
@@ -54,6 +61,11 @@ Takođe, važno je napomenuti da je OpenCvSharp modernija i češće ažurirana 
 
 # Zaključak
 
+OpenCvSharp predstavlja efikasno rešenje za programere koji žele da iskoriste mogućnosti OpenCV biblioteke unutar .NET okruženja, bez potrebe za učenjem drugih programskih jezika.
+
+Ova biblioteka je laka za korišćenje i omogućava brz razvoj aplikacija zahvaljujući jednostavnom API-ju i dobroj integraciji sa .NET okruženjem.
+
+Međutim, u slučajevima gde su ključne maksimalne performanse i brzina izvršavanja, preporučuje se korišćenje originalne verzije OpenCV biblioteke napisane u C++ jeziku.
 
 
 
