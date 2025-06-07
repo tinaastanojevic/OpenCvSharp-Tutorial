@@ -1,7 +1,7 @@
 # Kreiranje aplikacije pomoću OpenCvSharp biblioteke
 U ovom projektu razvijena je Windows Forms aplikacija koja koristi OpenCvSharp biblioteku. Cilj aplikacije je demonstracija i praktična primena odabranih funkcionalnosti ove biblioteke za obradu i analizu slika.
 
-# Sadržaj
+## Sadržaj
 
 - [OpenCvSharp biblioteka](#opencvsharp-biblioteka)
   - [Mogućnosti biblioteke](#mogućnosti-biblioteke)
@@ -14,13 +14,13 @@ U ovom projektu razvijena je Windows Forms aplikacija koja koristi OpenCvSharp b
 - [Implementacija](#implementacija)
 - [Zaključak](#zaključak)
 
-# OpenCvSharp biblioteka
+## OpenCvSharp biblioteka
 
 OpenCvSharp predstavlja open-source .NET wrapper za popularnu biblioteku OpenCV, koja se koristi za obradu slika i računarski vid. Iako je OpenCV izvorno razvijena u programskom jeziku C++, OpenCvSharp omogućava korišćenje njenih funkcionalnosti direktno u .NET okruženju.
 
 Zahvaljujući ovoj biblioteci, programeri mogu da razvijaju aplikacije u okviru tehnologija kao što su Windows Forms, WPF i .NET konzolne aplikacije, pri čemu se zadržava većina performansi koje pruža originalna C++ implementacija.
 
-## Mogućnosti biblioteke
+### Mogućnosti biblioteke
 Biblioteka OpenCvSharp obuhvata većinu funkcionalnosti koje nudi originalna OpenCV biblioteka. Omogućava učitavanje i prikaz slika, kao i različite oblike obrade slika, uključujući filtriranje, zamućenje , konverziju između različitih modela boja  (grayscale, HSV, YCrCb...), kao i binarizaciju pomoću različitih metoda pragovanja. 
 
 Jedne od značajnijih funkcionalnosti uključuju detekciju ivica i kontura, koje se koriste u različitim zadacima kao što su prepoznavanje objekata, segmentacija i detekcija oblika. 
@@ -30,13 +30,13 @@ Pored osnovnih metoda obrade, biblioteka pruža i naprednije tehnike koje se kor
 OpenCvSharp takođe ima i podršku za rad sa modelima dubokog učenja putem DNN (Deep Neutral Network) modula.
 Pored rada sa statičkim slikama, biblioteka omogućava i rad sa video zapisima, uključujući prikaz video zapisa u realnom vremenu, njegovu obradu, kao i snimanje obrađenih video snimaka. Zahvaljujući ovim mogućnostima, OpenCvSharp se može koristiti za razvoj real-time aplikacija.
 
-## Problem koji rešava 
+### Problem koji rešava 
 
 Budući da je originalna OpenCV biblioteka napisana u programskom jeziku C++, njena direktna upotreba u C# projektima predstavlja određeni izazov. Zbog toga je razvijen OpenCvSharp, .NET wrapper koji omogućava korišćenje funkcionalnosti OpenCV biblioteke unutar .NET okruženja bez potrebe za napuštanjem poznatog jezika i razvojne platforme. 
 
 Na taj način uklonjeno je ograničenje koje proizilazi iz razlike između programskih jezika, čime je eliminisana potreba za ručnim pisanjem interop sloja. To značajno pojednostavljuje razvoj aplikacija koje se bave obradom slike i računarskim vidom u C# jeziku.
 
-## Prednosti korišćenja 
+### Prednosti korišćenja 
 
 OpenCvSharp predstavlja jednostavno rešenje za integraciju OpenCV funkcionalnosti u .NET projekte, pružajući gotovo sve mogućnosti originalne OpenCV biblioteke.
 
@@ -45,7 +45,7 @@ Zahvaljujući optimizovanim native C++ funkcija, ova biblioteka omogućava visok
 Pored navedenih prednosti, treba napomenuti da OpenCvSharp ima aktivnu zajednicu korisnika i često ažuriran GitHub repozitorijum, kao i dobru dokumentaciju, što olakšava učenje i lakšu primenu biblioteke u različitim aplikacijama.
 
 
-## Konkurentna rešenja 
+### Konkurentna rešenja 
 
 OpenCvSharp nije jedina biblioteka koja omogućava korišćenje OpenCV funkcionalnosti unutar .NET aplikacija. Njena najpoznatija alternativa je Emgu CV, koja takođe predstavlja .NET wrapper za OpenCV biblioteku. 
 
@@ -57,13 +57,13 @@ Još jedna od razlika je što Emgu CV koristi model dvostruke licence: open-sour
 
 Takođe, važno je napomenuti da je OpenCvSharp modernija i češće ažurirana biblioteka u poređenju sa Emgu CV, što je čini pogodnijom za projekte kojima je važnija savremena podrška i kompatibilnost sa novim verzijama OpenCV-ja.
 
-# Instalacija biblioteke
+## Instalacija biblioteke
 
-## Preduslovi
+### Preduslovi
 
 Za instalaciju OpenCvSharp biblioteke preporučuje se korišćenje Visual Studio okruženja, koje ima ugrađene alate za upravljanje NuGet paketima, olakšavajući instalaciju i upravljanje zavisnostima u .NET projektima.
 
-## Instalacija
+### Instalacija
 
 Najjednostavniji način za instalaciju OpenCvSharp biblioteke u .NET projekat je korišćenjem NuGet paketa. Instalacija se može izvršiti na dva načina:
 1. Kroz NuGet Package Manager Console
@@ -86,7 +86,7 @@ Još jedan od korisnih paketa je OpenCvSharp4.Extensions, koji pruža dodatne fu
 
 U Visual Studio okruženju, u okviru panela References unutar projekta biće prikazani svi dodati NuGet paketi. Ovaj pregled nam omogućava da lako proverimo da li su svi neophodni paketi uspešno uključeni u projekat, što je ključno za pravilno funkcionisanje aplikacije i izbegavanje problema sa zavisnostima.
 
-# Implementacija
+## Implementacija
 
 U okviru ovog projekta razvijena je aplikacija Image Analyzer koja koristi OpenCvSharp biblioteku za obradu i analizu slika u .NET okruženju. Aplikacija omogućava korisniku da učita sliku sa računara, izvrši njenu obradu i nakon toga da sačuva izmenjenu sliku na računar. 
 
@@ -294,7 +294,7 @@ private void faceDetectionToolStripMenuItem_Click(object sender, EventArgs e)
 ```
 
 
-# Zaključak
+## Zaključak
 
 OpenCvSharp predstavlja efikasno rešenje za programere koji žele da iskoriste mogućnosti OpenCV biblioteke unutar .NET okruženja, bez potrebe za učenjem drugih programskih jezika.
 
