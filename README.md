@@ -200,13 +200,13 @@ Za uklanjanje šuma sa slike koriste se različite vrste zamućenja. Neke od naj
 
 Za kreiranje binarne slike, odnosno slike koja se sastoji isključivo od crnih i belih piksela, koristi se tehnika thresholding. Ovim postupkom vrši se segmentacija slike na osnovu vrednosti praga, što omogućava odvajanje objekta od pozadine. U okviru projekta implementirane su različite threshold metode: Otsu Threshold, Adaptive Mean Threshold i Adaptive Gaussian Threshold. Kod adaptivnih metoda, korisnik može ručno podešavati parametre veličine kernela i konstantu C, čime se utiče na preciznost i kvalitet segmentacije.
 
-Za primenu Otsu thresholda neophodno je metodi Cv2.Threshold proslediti parametar ThresholdTypes.Otsu. Ova tehnika automatski određuje optimalnu vrednost praga za segmentaciju slike, čime se postiže preciznija binarizacija bez potrebe za ručnim podešavanjem praga.
+Za primenu Otsu thresholda neophodno je metodi `Cv2.Threshold` proslediti parametar ThresholdTypes.Otsu. Ova tehnika automatski određuje optimalnu vrednost praga za segmentaciju slike, čime se postiže preciznija binarizacija bez potrebe za ručnim podešavanjem praga.
 
 ```csharp 
 Cv2.Threshold(getGrayscale(), editedImage, 0, 255, ThresholdTypes.Binary | ThresholdTypes.Otsu);
 ```
 
-Za primenu adaptivnih metoda binarizacije koristi se Cv2.AdaptiveThreshold. Kao parametar se prosleđuje tip adaptivnog praga, koji može biti AdaptiveThresholdTypes.MeanC ili AdaptiveThresholdTypes.GaussianC, u zavisnosti od željene metode izračunavanja vrednosti praga.
+Za primenu adaptivnih metoda binarizacije koristi se `Cv2.AdaptiveThreshold`. Kao parametar se prosleđuje tip adaptivnog praga, koji može biti `AdaptiveThresholdTypes.MeanC` ili `AdaptiveThresholdTypes.GaussianC`, u zavisnosti od željene metode izračunavanja vrednosti praga.
 
 ```csharp 
 if (parameters.Type == AdaptiveType.Mean)
@@ -275,13 +275,20 @@ private void faceDetectionToolStripMenuItem_Click(object sender, EventArgs e)
                 string modelPath = Path.Combine(Application.StartupPath, "Models", "haarcascade_frontalface_default.xml");
                 if (!File.Exists(modelPath))
                 {
-                    MessageBox.Show("Model za detekciju lica nije pronađen!");
+                    MessageBox.Show("Face detection model not found!");
                     return;
                 }
 
                 var faceCascade = new CascadeClassifier(modelPath);
 
                 Rect[] faces = faceCascade.DetectMultiScale(getGrayscale(), 1.1, 5);
+
+                if (faces.Length == 0)
+                {
+                    MessageBox.Show("No faces were detected in the image.");
+                    return;
+                }
+
 
                 foreach (var face in faces)
                 {
