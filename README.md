@@ -42,7 +42,7 @@ OpenCvSharp predstavlja jednostavno rešenje za integraciju OpenCV funkcionalnos
 
 Zahvaljujući optimizovanim native C++ funkcija, ova biblioteka omogućava visoke performanse, što je veoma značajno kod obrade slika i računarskog vida. 
 
-Pored navedenih prednosti, treba napomenuti da OpenCvSharp ima aktivnu zajednicu korisnika i često ažuriran GitHub repozitorijum, kao i dobru dokumentaciju, što olakšava učenje i lakšu primenu biblioteke u različitim aplikacijama.
+Pored navedenih prednosti, treba napomenuti da OpenCvSharp ima aktivnu zajednicu korisnika i često ažuriran [GitHub repozitorijum](https://github.com/shimat/opencvsharp), kao i dobru [dokumentaciju](https://shimat.github.io/opencvsharp_docs/html/d69c29a1-7fb1-4f78-82e9-79be971c3d03.htm), što olakšava učenje i lakšu primenu biblioteke u različitim aplikacijama.
 
 
 ### Konkurentna rešenja 
@@ -265,7 +265,7 @@ private void findContoursToolStripMenuItem_Click(object sender, EventArgs e)
 
 - Detekcija lica
 
-Za detekciju lica korišćen je Haar Cascade klasifikator i prethodno trenirani model za frontalnu detekciju lica. Model se nalazi u xml fajlu `haarcascade_frontalface_default.xml` na zvaničnom OpenCV github repozitorijumu. Neophodno je preuzetiovaj model i dodati ga u projekat unutar foldera Models. OpenCvSharp omogućava korišćenje ovog modela putem klase `CascadeClassifier`. Parametar modelPath predstavlja putanju do prethodno preuzetog modela, a metoda `DetectMultiScale()` služi za detektovanje više objekata na slici. Metodi se prosleđuje grayscale slika, faktor skaliranja i minimalni broj susednih pravougaonika koji moraju da prepoznaju isto lice da bi ono bilo potvrđeno kao validno. Pronađena lica smeštaju se u faces niz, nakon čega pomoću metode `Cv2.Rectangle` iscrtavamo crvene pravougaonike oko detektovanih lica.
+Za detekciju lica korišćen je Haar Cascade klasifikator i prethodno trenirani model za frontalnu detekciju lica. Model se nalazi u xml fajlu `haarcascade_frontalface_default.xml` na zvaničnom [OpenCV GitHub repozitorijumu](https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml). Neophodno je preuzetiovaj model i dodati ga u projekat unutar foldera Models. OpenCvSharp omogućava korišćenje ovog modela putem klase `CascadeClassifier`. Parametar modelPath predstavlja putanju do prethodno preuzetog modela, a metoda `DetectMultiScale()` služi za detektovanje više objekata na slici. Metodi se prosleđuje grayscale slika, faktor skaliranja i minimalni broj susednih pravougaonika koji moraju da prepoznaju isto lice da bi ono bilo potvrđeno kao validno. Pronađena lica smeštaju se u faces niz, nakon čega pomoću metode `Cv2.Rectangle` iscrtavamo crvene pravougaonike oko detektovanih lica.
 ```csharp 
 private void faceDetectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
